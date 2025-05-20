@@ -41,6 +41,18 @@ pg_ctl start -D /var/lib/pgsql/16/data
 ---
 ---
 
+## Switchback :- Returning the original primary back to its primary role after its recovered or maintained.
+```
+--- Steps (Same as Switchover but in reverse):
+Now:
+server2 is primary
+server1 is standby
+
+
+
+```
+
+Important Notes
 
 
 
