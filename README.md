@@ -24,7 +24,8 @@ SELECT pg_switch_wal();
 
 pg_ctl promote -D /var/lib/pgsql/16/data or SELECT pg_promote();
 
---- On Old Primary (server1) Stop services:-
+--- On Old Primary (server1) Stop the services:-
+
 pg_ctl stop -D /var/lib/pgsql/16/data
 
 ```
@@ -52,7 +53,13 @@ server1 is standby
 
 ```
 
-Important Notes
+### Important Notes :
+```
+1. Monitor WAL replay log before promoting.
+2. Ensure replication users have required permissions.
+3. Automate with scripts or use toolslike repmgr , patroni for safer transactions
+4. Always back up pg_hba.conf postgresql.conf , and repliction slot.
+```
 
 
 
