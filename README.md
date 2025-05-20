@@ -55,19 +55,35 @@ server1 is standby
 ```
 ### Verify all parameters on both Standby and Primary servers before the pg_basebackup:
 
-| **Primary Level Parameters**      | **Standby Level Parameters**      |
-|----------------------------------|----------------------------------|
-| wal_level                     | standby_mode                  |
-| max_wal_sender                 | restore_command               |
-| wal_sender_timeout             | recovery_target_*             |
-| archive_command                | wal_receiver_status_interval  |
-| archive_mode                   | recovery_min_apply_delay      |
-| primary_coninfo                | standby.signal                |
-| replication_slot               | wal_receiver_timeout          |
-| max_replication_slot           | hot_standby_feedback          |
-| wal_keep_size                  | synchronous_standby_name      |
-| synchronous_commit             | primary_slot_name             |
+# Primary Server Parameters
 
+| Parameter                 | Description |
+|---------------------------|-------------|
+| **wal_level**             | Sets the amount of information written to WAL. Must be `replica` or `logical` for replication. |
+| **max_wal_senders**       | Number of replication (WAL sender) processes to allow. |
+| **wal_keep_size**         | Minimum size of WAL files to retain to support slower standbys. |
+| **max_replication_slots** | Max number of replication slots to retain WAL for standbys. |
+| **archive_mode**          | Enables archiving of WAL files to a configured archive. |
+| **archive_command**       | Command to run to archive a WAL segment file. |
+| **wal_sender_timeout**    | Time to wait before terminating unresponsive standby connections. |
+| **synchronous_standby_names** | Specifies standby servers considered as synchronous for replication. |
+| **synchronous_commit**    | Controls whether commit waits for acknowledgment from standby. |
+
+---
+
+# Standby Server Parameters
+
+| Parameter                 | Description |
+|---------------------------|-------------|
+| **primary_conninfo**      | Connection string to connect to the primary server. Includes host, port, user, etc. |
+| **primary_slot_name**     | The name of the replication slot to use on the primary. |
+| **standby.signal**        | File that activates standby mode in PostgreSQL 12+. |
+| **restore_command**       | Command to fetch archived WAL files during recovery. |
+| **wal_receiver_timeout**  | Timeout if standby doesn’t receive WAL data from primary in time. |
+| **wal_receiver_status_interval** | Interval at which standby sends feedback to primary. |
+| **recovery_min_apply_delay** | Introduces an artificial delay before applying WAL files. |
+| **hot_standby_feedback**  | Sends feedback to prevent tuple cleanup on primary that standby still needs. |
+| **recovery_target_***     | Used for Point-In-Time Recovery (e.g., `recovery_target_time`, `recovery_target_lsn`). |
 
 ### Important Notes :
 ```
