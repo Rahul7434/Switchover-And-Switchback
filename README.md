@@ -6,9 +6,12 @@
 ## Switchover
 
 - When to perform :-
-    1. Maintainance on the primary server
-    2. Load balancing
-    3. Testing HA setup
+    1. Maintainance on the primary server.
+           - Patch / upgrade
+           - Reboot Matchine
+           - Change Hardware or migrade to differen disk/VM.
+    3. Load balancing
+    4. Testing HA setup
 
 ## Steps (Manual using Streaming Replication): 
 ```
