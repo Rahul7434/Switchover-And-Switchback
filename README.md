@@ -32,7 +32,7 @@ pg_ctl promote -D /var/lib/pgsql/16/data or SELECT pg_promote();
 pg_ctl stop -D /var/lib/pgsql/16/data
 
 ```
-#### Configure as new strandby old primary (server1):
+#### Configure as new standby old primary (server1):
 ```
 1. Clear or rename old data directory.
 2. Use pg_basebackup from new primary (server2).
@@ -52,9 +52,22 @@ Now:
 server2 is primary
 server1 is standby
 
-
-
 ```
+### Verify all parameters on both Standby and Primary servers before the pg_basebackup:
+
+| **Primary Level Parameters**      | **Standby Level Parameters**      |
+|----------------------------------|----------------------------------|
+| wal_level                     | standby_mode                  |
+| max_wal_sender                 | restore_command               |
+| wal_sender_timeout             | recovery_target_*             |
+| archive_command                | wal_receiver_status_interval  |
+| archive_mode                   | recovery_min_apply_delay      |
+| primary_coninfo                | standby.signal                |
+| replication_slot               | wal_receiver_timeout          |
+| max_replication_slot           | hot_standby_feedback          |
+| wal_keep_size                  | synchronous_standby_name      |
+| synchronous_commit             | primary_slot_name             |
+
 
 ### Important Notes :
 ```
